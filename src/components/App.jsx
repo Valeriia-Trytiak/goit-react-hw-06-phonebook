@@ -17,23 +17,6 @@ export const App = () => {
   //   localStorage.setItem('contacts-list', JSON.stringify(contacts));
   // }, [contacts]);
 
-  // Додаю контакт до стану
-  // const addNewContact = newContact => {
-  //   const nameExists = contacts.some(
-  //     contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
-  //   );
-  //   if (nameExists) {
-  //     alert(`${newContact.name}' is arleady in contacts.`);
-  //   } else {
-  //     setContacts(prevState => [...prevState, { ...newContact, id: nanoid() }]);
-  //   }
-  // };
-
-  // Записую до стану значення пошуку
-  // const uppdateFilter = searchName => {
-  //   setFilter(searchName);
-  // };
-
   return (
     <Container>
       <h1>Phonebook</h1>

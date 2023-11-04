@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilter } from 'redux/selectors';
-import { setFilter } from 'redux/actions';
+import { setFilter } from 'redux/filterSlice';
 import { FiSearch } from 'react-icons/fi';
 import { Container, SearchField } from './Filter.styled';
 
