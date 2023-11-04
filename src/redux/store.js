@@ -1,5 +1,7 @@
-import { createStore } from '@reduxjs/toolkit';
-const initialState = {
+import { combineReducers, createStore } from 'redux';
+import { devToolsEnhancer } from '@redux-devtools/extension';
+
+const initialStateContacts = {
   contacts: [
     { name: 'Rosie Simpson', number: '459-12-56', id: 'TKtqZ2TBe9EPD8rVLmclU' },
     {
@@ -16,10 +18,9 @@ const initialState = {
     { name: 'Valeriia', number: '885-13-46', id: 'b2ApA1DVbIHgdw4pnjFVL' },
     { name: 'Mark Smit', number: '459-12-56', id: 'h0eK-5SEHgW_F4CCa4AIE' },
   ],
-  filter: '',
 };
 
-const rootReducer = (state = initialState, action) => {
+const contactsReducer = (state = initialStateContacts, action) => {
   switch (action.type) {
     case 'contacts/addContact':
       return {
@@ -33,6 +34,16 @@ const rootReducer = (state = initialState, action) => {
           contact => contact.id !== action.payload
         ),
       };
+    default:
+      return state;
+  }
+};
+const initialStateFilter = {
+  filter: '',
+};
+
+const filterReducer = (state = initialStateFilter, action) => {
+  switch (action.type) {
     case 'filter/setFilter':
       return {
         ...state,
@@ -44,4 +55,10 @@ const rootReducer = (state = initialState, action) => {
   }
 };
 
-export const store = createStore(rootReducer);
+const rootReducer = combineReducers({
+  contacts: contactsReducer,
+  filter: filterReducer,
+});
+const enhancer = devToolsEnhancer();
+
+export const store = createStore(rootReducer, enhancer);

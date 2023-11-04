@@ -1,4 +1,6 @@
-import { Component } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/actions';
+import { nanoid } from 'nanoid';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -9,6 +11,7 @@ import {
   UserIcon,
   UserPhone,
 } from './ContactForm.styled';
+import { getContacts } from 'redux/selectors';
 
 const ContactShema = Yup.object().shape({
   name: Yup.string()
@@ -29,33 +32,42 @@ const ContactShema = Yup.object().shape({
     .min(9, 'Please enter at least 9 characters'),
 });
 
-export class ContactForm extends Component {
-  render() {
-    return (
-      <Formik
-        initialValues={{ name: '', number: '' }}
-        onSubmit={(values, actions) => {
-          this.props.onUpdateContactList(values);
-          actions.resetForm();
-        }}
-        validationSchema={ContactShema}
-      >
-        <StyledForm>
-          <label>
-            Name
-            <UserIcon />
-            <StyledInput name="name" type="text" />
-            <Error name="name" component="span" />
-          </label>
-          <label>
-            Number
-            <UserPhone />
-            <StyledInput name="number" type="tel" />
-            <Error name="number" component="span" />
-          </label>
-          <AddContactButton type="submit">Add contact</AddContactButton>
-        </StyledForm>
-      </Formik>
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+  const handleSubmit = (values, actions) => {
+    const nameExists = contacts.some(
+      contact => contact.name.toLowerCase() === values.name.toLowerCase()
     );
-  }
-}
+    if (nameExists) {
+      alert(`${values.name} is already in contacts.`);
+    } else {
+      dispatch(addContact({ ...values, id: nanoid() }));
+      actions.resetForm();
+    }
+  };
+
+  return (
+    <Formik
+      initialValues={{ name: '', number: '' }}
+      onSubmit={handleSubmit}
+      validationSchema={ContactShema}
+    >
+      <StyledForm>
+        <label>
+          Name
+          <UserIcon />
+          <StyledInput name="name" type="text" />
+          <Error name="name" component="span" />
+        </label>
+        <label>
+          Number
+          <UserPhone />
+          <StyledInput name="number" type="tel" />
+          <Error name="number" component="span" />
+        </label>
+        <AddContactButton type="submit">Add contact</AddContactButton>
+      </StyledForm>
+    </Formik>
+  );
+};
