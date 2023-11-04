@@ -42,6 +42,6 @@ export const { setFilter } = filterSlice.actions;
 //   })
 // );
 
-const initialState = {
-  filter: '',
-};
+// const initialState = {
+//   filter: '',
+// };
