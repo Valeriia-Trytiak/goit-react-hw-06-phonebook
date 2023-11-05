@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
-import { nanoid } from 'nanoid';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -42,7 +41,7 @@ export const ContactForm = () => {
     if (nameExists) {
       alert(`${values.name} is already in contacts.`);
     } else {
-      dispatch(addContact({ ...values, id: nanoid() }));
+      dispatch(addContact(values));
       actions.resetForm();
     }
   };
@@ -62,8 +61,8 @@ export const ContactForm = () => {
         </label>
         <label>
           Number
-          <UserPhone />
           <StyledInput name="number" type="tel" />
+          <UserPhone />
           <Error name="number" component="span" />
         </label>
         <AddContactButton type="submit">Add contact</AddContactButton>

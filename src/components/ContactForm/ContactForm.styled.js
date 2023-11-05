@@ -13,9 +13,11 @@ export const StyledForm = styled(Form)`
 export const Error = styled(ErrorMessage)`
   color: ${p => p.theme.colors.error};
   font-size: 14px;
+  display: block;
 `;
 
 export const StyledInput = styled(Field)`
+  position: relative;
   font-size: 16px;
   padding: ${p => p.theme.spacing(2)} ${p => p.theme.spacing(1)}
     ${p => p.theme.spacing(2)} ${p => p.theme.spacing(7)};
@@ -63,6 +65,7 @@ export const UserIcon = styled(CiUser)`
   left: 5px;
   font-size: 20px;
   color: ${p => p.theme.colors.grey};
+  z-index: 100;
 
   @media only screen and (min-width: 768px) {
     top: 10px;
@@ -76,6 +79,7 @@ export const UserPhone = styled(CiPhone)`
   left: 5px;
   font-size: 20px;
   color: ${p => p.theme.colors.grey};
+  z-index: 100;
 
   @media only screen and (min-width: 768px) {
     top: 68px;
